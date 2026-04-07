@@ -10,7 +10,7 @@ const useAuthStore = create((set, get) => ({
   register: async (data) => {
     set({ loading: true })
     try {
-      const res = await API.post('/auth/register', data)
+      const res = await API.post('/api/auth/register', data)
       const { token, user } = res.data
       localStorage.setItem('sweetshop_token', token)
       localStorage.setItem('sweetshop_user', JSON.stringify(user))
@@ -27,7 +27,7 @@ const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ loading: true })
     try {
-      const res = await API.post('/auth/login', data)
+      const res = await API.post('/api/auth/login', data)
       const { token, user } = res.data
       localStorage.setItem('sweetshop_token', token)
       localStorage.setItem('sweetshop_user', JSON.stringify(user))
@@ -55,7 +55,7 @@ const useAuthStore = create((set, get) => ({
 
   fetchMe: async () => {
     try {
-      const res = await API.get('/auth/me')
+      const res = await API.get('/api/auth/me')
       const user = res.data.user
       localStorage.setItem('sweetshop_user', JSON.stringify(user))
       set({ user })
