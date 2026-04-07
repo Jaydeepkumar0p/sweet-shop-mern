@@ -16,7 +16,7 @@ const useProductStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const query = new URLSearchParams(params).toString()
-      const res   = await API.get(`/products?${query}`)
+      const res   = await API.get(`/api/products?${query}`)
       set({
         products: res.data.products,
         total:    res.data.total,
@@ -31,14 +31,14 @@ const useProductStore = create((set) => ({
 
   fetchFeatured: async () => {
     try {
-      const res = await API.get('/products/featured')
+      const res = await API.get('/api/products/featured')
       set({ featured: res.data.products })
     } catch {}
   },
 
   fetchBestSellers: async () => {
     try {
-      const res = await API.get('/products/bestsellers')
+      const res = await API.get('/api/products/bestsellers')
       set({ bestSellers: res.data.products })
     } catch {}
   },
@@ -46,7 +46,7 @@ const useProductStore = create((set) => ({
   fetchProduct: async (id) => {
     set({ loading: true, product: null })
     try {
-      const res = await API.get(`/products/${id}`)
+      const res = await API.get(`/api/products/${id}`)
       set({ product: res.data.product, loading: false })
     } catch (err) {
       set({ error: err.response?.data?.message || 'Product not found', loading: false })
