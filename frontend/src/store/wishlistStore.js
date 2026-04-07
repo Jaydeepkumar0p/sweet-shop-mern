@@ -9,7 +9,7 @@ const useWishlistStore = create((set, get) => ({
   fetchWishlist: async () => {
     set({ loading: true })
     try {
-      const res = await API.get('/wishlist')
+      const res = await API.get('/api/wishlist')
       set({ wishlist: res.data.wishlist, loading: false })
     } catch {
       set({ loading: false })
@@ -18,7 +18,7 @@ const useWishlistStore = create((set, get) => ({
 
   toggleWishlist: async (productId) => {
     try {
-      const res = await API.post('/wishlist/toggle', { productId })
+      const res = await API.post('/api/wishlist/toggle', { productId })
       const { action } = res.data
       if (action === 'added') {
         toast.success('Added to wishlist ❤️')
