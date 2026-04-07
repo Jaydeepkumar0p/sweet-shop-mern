@@ -9,7 +9,7 @@ const useCartStore = create((set, get) => ({
   fetchCart: async () => {
     set({ loading: true })
     try {
-      const res = await API.get('/cart')
+      const res = await API.get('/api/cart')
       set({ cart: res.data.cart, loading: false })
     } catch {
       set({ loading: false })
@@ -18,7 +18,7 @@ const useCartStore = create((set, get) => ({
 
   addToCart: async (productId, quantity = 1) => {
     try {
-      const res = await API.post('/cart', { productId, quantity })
+      const res = await API.post('/api/cart', { productId, quantity })
       set({ cart: res.data.cart })
       toast.success('Added to cart! 🛒')
       return true
@@ -30,7 +30,7 @@ const useCartStore = create((set, get) => ({
 
   updateQuantity: async (productId, quantity) => {
     try {
-      const res = await API.put(`/cart/${productId}`, { quantity })
+      const res = await API.put(`/api/cart/${productId}`, { quantity })
       set({ cart: res.data.cart })
     } catch (err) {
       toast.error(err.response?.data?.message || 'Update failed')
@@ -39,7 +39,7 @@ const useCartStore = create((set, get) => ({
 
   removeFromCart: async (productId) => {
     try {
-      const res = await API.delete(`/cart/${productId}`)
+      const res = await API.delete(`/api/cart/${productId}`)
       set({ cart: res.data.cart })
       toast.success('Removed from cart')
     } catch {
@@ -49,7 +49,7 @@ const useCartStore = create((set, get) => ({
 
   clearCart: async () => {
     try {
-      await API.delete('/cart')
+      await API.delete('/api/cart')
       set({ cart: [] })
     } catch {}
   },
