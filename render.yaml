@@ -1,0 +1,43 @@
+services:
+  # ── Backend API ─────────────────────────────────────────────────
+  - type: web
+    name: sweetshop-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URL
+        sync: false        # set in Render dashboard
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: CLIENT_URL
+        sync: false        # your frontend URL e.g. https://sweetshop-frontend.onrender.com
+    healthCheckPath: /
+
+  # ── Frontend Static Site ─────────────────────────────────────────
+  - type: web
+    name: sweetshop-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false        # e.g. https://sweetshop-backend.onrender.com/api
+      - key: VITE_STRIPE_PK
+        sync: false        # your Stripe publishable key
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
